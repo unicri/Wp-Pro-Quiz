@@ -875,7 +875,7 @@ class WpProQuiz_View_FrontQuiz extends WpProQuiz_View_View
                                     <h5 class="wpProQuiz_header"><?php _e('Sort elements', 'wp-pro-quiz'); ?></h5>
                                     <ul class="wpProQuiz_sortStringList">
                                         <?php
-                                        $matrix = array();
+                                        if (is_array($answerArray)) {
                                         foreach ($answerArray as $k => $v) {
                                             $matrix[$k][] = $k;
 
@@ -891,6 +891,7 @@ class WpProQuiz_View_FrontQuiz extends WpProQuiz_View_View
                                                 }
                                             }
                                         }
+                                        
 
                                         foreach ($answerArray as $k => $v) {
                                             ?>
@@ -898,7 +899,8 @@ class WpProQuiz_View_FrontQuiz extends WpProQuiz_View_View
                                                 data-correct="<?php echo implode(',', $matrix[$k]); ?>">
                                                 <?php echo $v->isSortStringHtml() ? $v->getSortString() : esc_html($v->getSortString()); ?>
                                             </li>
-                                        <?php } ?>
+                                        <?php } 
+                                        }?>
                                     </ul>
                                     <div style="clear: both;"></div>
                                 </div>
@@ -907,7 +909,8 @@ class WpProQuiz_View_FrontQuiz extends WpProQuiz_View_View
                                 data-type="<?php echo $question->getAnswerType(); ?>">
                                 <?php
                                 $answer_index = 0;
-
+                                
+                                if (is_array($answerArray)) {
                                 foreach ($answerArray as $v) {
                                     $answer_text = $v->isHtml() ? $v->getAnswer() : esc_html($v->getAnswer());
 
@@ -1009,6 +1012,7 @@ class WpProQuiz_View_FrontQuiz extends WpProQuiz_View_View
                                     <?php
                                     $answer_index++;
                                 }
+                                }
                                 ?>
                             </ul>
                         </div>
@@ -1021,7 +1025,7 @@ class WpProQuiz_View_FrontQuiz extends WpProQuiz_View_View
 										<?php _e('Correct', 'wp-pro-quiz'); ?>
 									</span>
                                             <span
-                                                style="float: right;"><?php echo $question->getPoints() . ' / ' . $question->getPoints(); ?> <?php _e('Points',
+                                                style="float: right;"><?php echo $question->getPoints() . ' / ' . $question->getPoints(); ?><?php _e('Points',
                                                     'wp-pro-quiz'); ?></span>
 
                                             <div style="clear: both;"></div>
